@@ -44,7 +44,7 @@ namespace {
 #pragma weak tcmRegisterThread
 #pragma weak tcmUnregisterThread
 #pragma weak tcmGetVersionInfo
-#pragma weak tcmInitPermit
+
 #endif /* __TBB_WEAK_SYMBOLS_PRESENT */
 
 tcm_result_t(*tcm_connect)(tcm_callback_t callback, tcm_client_id_t* client_id){nullptr};
@@ -134,7 +134,7 @@ public:
     }
 
     int update_concurrency(uint32_t concurrency) {
-        return my_arena.update_concurrency(concurrency);
+        return my_arena.update_concurrency(concurrency > my_arena.my_num_reserved_slots ? concurrency - my_arena.my_num_reserved_slots : 0);
     }
 
     unsigned priority_level() {
@@ -176,8 +176,10 @@ public:
     void request_permit(tcm_client_id_t client_id) {
         __TBB_ASSERT(tcm_request_permit, nullptr);
 
-        my_permit_request.max_sw_threads = max_workers();
-        my_permit_request.min_sw_threads = my_permit_request.max_sw_threads == 0 ? 0 : min_workers();
+        my_permit_request.max_sw_threads = max_workers() + my_arena.my_num_reserved_slots;
+        my_permit_request.min_sw_threads = min_workers() + my_arena.my_num_reserved_slots;
+
+        // __TBB_ASSERT(my_permit_request.min_sw_threads >= 1, nullptr);
 
         if (my_permit_request.constraints_size > 0) {
             my_permit_request.cpu_constraints->min_concurrency = my_permit_request.min_sw_threads;
@@ -216,8 +218,10 @@ public:
 
         my_permit_request.min_sw_threads = 0;
         my_permit_request.max_sw_threads = 0;
+        my_permit_request.flags.request_as_inactive = 1;
         tcm_result_t res = tcm_request_permit(client_id, my_permit_request, this, &my_permit_handle, nullptr);
         __TBB_ASSERT_EX(res == TCM_RESULT_SUCCESS, nullptr);
+        my_permit_request.flags.request_as_inactive = 0;
         my_register_observer.set_permit_handle(my_permit_handle);
     }
 private:
@@ -248,6 +252,7 @@ struct tcm_adaptor_impl {
 
 tcm_result_t renegotiation_callback(tcm_permit_handle_t, void* client_ptr, tcm_callback_flags_t) {
     __TBB_ASSERT(client_ptr, nullptr);
+    // printf("%p is negotiated\n", (void*)ph);
     static_cast<tcm_client*>(client_ptr)->actualize_permit();
     return TCM_RESULT_SUCCESS;
 }

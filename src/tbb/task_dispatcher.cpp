@@ -163,6 +163,8 @@ void task_dispatcher::execute_and_wait(d1::task* t, d1::wait_context& wait_ctx, 
         task_accessor::isolation(*t) = tls->my_task_dispatcher->m_execute_data_ext.isolation;
     }
 
+    tls->my_arena->my_observers.notify_entry_observers(tls->my_last_observer, tls->my_is_worker);
+
     // Waiting on special object tied to a waiting thread.
     external_waiter waiter{ *tls->my_arena, wait_ctx };
     t = local_td.local_wait_for_all(t, waiter);
