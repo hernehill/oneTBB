@@ -88,3 +88,8 @@ cmake/TBBConfigVersion.cmake
 crash*
 *.tmp
 /.vs
+
+# HH
+_rez_build
+.vscode
+.idea
