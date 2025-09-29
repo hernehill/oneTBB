@@ -1,6 +1,6 @@
 name = "tbb"
 
-version = "2022.2.0.hh.1.0.1"
+version = "2022.2.0.hh.1.0.0"
 
 authors = [
     "Intel",
@@ -32,4 +32,3 @@ def commands():
 
 
 uuid = "repository.oneTBB"
-build_command = "bash {root}/rez_build.sh {root}"
