@@ -60,3 +60,7 @@ CMakeSettings.json
 .tags
 .ctags
 
+
+# HH
+_rez_build
+.idea
