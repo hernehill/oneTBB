@@ -17,5 +17,6 @@ mkdir ${REZ_BUILD_INSTALL_PATH}/include
 
 cp -a ${root_dir}/_rez_build/*_release/libtbb*.* ${REZ_BUILD_INSTALL_PATH}/lib
 # cp -a ${root_dir}/_rez_build/*_debug/libtbb*.* ${REZ_BUILD_INSTALL_PATH}/lib
-cp -a ${root_dir}/include/serial ${REZ_BUILD_INSTALL_PATH}/include/serial
+# cp -a ${root_dir}/include/serial ${REZ_BUILD_INSTALL_PATH}/include/serial
 cp -a ${root_dir}/include/tbb ${REZ_BUILD_INSTALL_PATH}/include/tbb
+cp -a ${root_dir}/include/oneapi ${REZ_BUILD_INSTALL_PATH}/include/oneapi

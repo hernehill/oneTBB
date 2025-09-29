@@ -1,6 +1,6 @@
 name = "tbb"
 
-version = "2022.2.0.hh.1.0.0"
+version = "2022.2.0.hh.1.0.1"
 
 authors = [
     "Intel",
