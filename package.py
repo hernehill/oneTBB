@@ -27,7 +27,7 @@ def commands():
     env.TBB_INSTALL_DIR = "{root}"
     env.TBB_INCLUDE_DIR = "{root}/include"
 
-    env.LD_LIBRARY_PATH.append("{root}/lib")
+    env.PATH.append("{root}/lib")
 
 
 uuid = "repository.oneTBB"
