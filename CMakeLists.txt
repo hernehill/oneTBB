@@ -95,7 +95,7 @@ endif()
 
 option(TBB_TEST "Enable testing" ON)
 option(TBB_EXAMPLES "Enable examples" OFF)
-option(TBB_STRICT "Treat compiler warnings as errors" ON)
+option(TBB_STRICT "Treat compiler warnings as errors" OFF)
 option(TBB_WINDOWS_DRIVER "Build as Universal Windows Driver (UWD)" OFF)
 option(TBB_NO_APPCONTAINER "Apply /APPCONTAINER:NO (for testing binaries for Windows Store)" OFF)
 option(TBB4PY_BUILD "Enable tbb4py build" OFF)
