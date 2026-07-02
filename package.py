@@ -28,6 +28,7 @@ def commands():
     env.TBB_INCLUDE_DIR = "{root}/include"
 
     env.PATH.append("{root}/lib")
+    env.PATH.append("{root}/bin")
 
 
 uuid = "repository.oneTBB"
